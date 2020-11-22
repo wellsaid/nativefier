@@ -23,7 +23,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: rm -rf lib/ app/lib/ app/dist/ node_modules/ app/node_modules/
     - run: npm run dev-up
     - run: npm run build
     # Only run linter once, for faster CI. Remind to keep linter+deploy conditions below aligned
