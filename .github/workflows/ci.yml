@@ -12,7 +12,7 @@ jobs:
       matrix:
         node-version:
           - 15.x
-          - 14.x # Changing this? Remind to keep linter+deploy conditions below aligned
+          - 14.x # Changing this? Remind to keep linter conditions below and in publish.yml aligned.
           - 12.x
           - 10.x
         platform: [ubuntu-latest, macos-latest, windows-latest]
@@ -25,7 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm run dev-up
     - run: npm run build
-      # Only run linter once, for faster CI. Remind to keep linter+deploy conditions below aligned
-    - run: if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_NODE_VERSION" = "14" ]; then npm run lint; fi
-      shell: bash
+      # Only run linter once, for faster CI. Align the verisons of Node here with above and publish.yml. 
+    - if:  matrix.os == "ubuntu-latest" && matrix.node == '14'
+      run: npm run lint
     - run: npm test
