@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [ master, actions ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version:
+          - 15.x
+          - 14.x # Changing this? Remind to keep linter+deploy conditions below aligned
+          - 12.x
+          - 10.x
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: rm -rf lib/ app/lib/ app/dist/ node_modules/ app/node_modules/
+    - run: npm run dev-up
+    - run: npm run build
+    # Only run linter once, for faster CI. Remind to keep linter+deploy conditions below aligned
+    - run: if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_NODE_VERSION" = "14" ]; then npm run lint; fi
+    - run: npm test
