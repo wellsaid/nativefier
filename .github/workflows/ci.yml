@@ -25,6 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm run dev-up
     - run: npm run build
-    # Only run linter once, for faster CI. Remind to keep linter+deploy conditions below aligned
+      # Only run linter once, for faster CI. Remind to keep linter+deploy conditions below aligned
     - run: if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_NODE_VERSION" = "14" ]; then npm run lint; fi
+      shell: bash
     - run: npm test
