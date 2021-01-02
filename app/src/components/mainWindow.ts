@@ -392,6 +392,18 @@ export function createMainWindow(
     clearCache(mainWindow);
   }
 
+  if(options.loader) {
+    if(options.loader.extraHeaders) {
+      mainWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+        options.loader.extraHeaders.split('\n').forEach((e, i) => {
+          const h = e.split(':');
+          details.requestHeaders[h[0]] = h[1];
+        });
+        callback({ requestHeaders: details.requestHeaders });
+      });
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   mainWindow.loadURL(options.targetUrl, options.loader);
 
