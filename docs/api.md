@@ -835,6 +835,21 @@ nativefier(options, function (error, appPath) {
 });
 ```
 
+#### [http-header]
+
+```
+--http-header <http_header_name>:<value>
+```
+
+Add an HTTP header that will be added to the request (can be specified more than once)
+See https://developer.mozilla.org/it/docs/Web/HTTP/Headers
+
+Example:
+
+```bash
+nativefier <your-website> --http-header Accept-Language:en-US
+```
+
 ### Addition packaging options for Windows
 
 #### [version-string]

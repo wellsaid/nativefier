@@ -49,6 +49,19 @@ function parseJson(val: string): any {
   }
 }
 
+let headers : string = '';
+
+function parseHttpHeader(val: string): any {
+    if(val.split(':').length !== 2)
+    {
+        const error = `Unable to parse HTTP header: ${val}`
+        log.error(error);
+        throw new Error(error);
+    }
+    headers += val + '\n';
+    return headers;
+}
+
 function getProcessEnvs(val: string): any {
   if (!val) {
     return {};
@@ -297,6 +310,11 @@ if (require.main === module) {
     .option(
       '--darwin-dark-mode-support',
       '(macOS only) enable Dark Mode support on macOS 10.14+',
+    )
+    .option(
+        '--http-header <http_header_name>:<value>',
+        'Add an HTTP header that will be added to the request (can be specified more than once)',
+        parseHttpHeader
     );
 
   try {

@@ -248,7 +248,7 @@ export function createMainWindow(
     sendParamsOnDidFinishLoad(window);
     window.webContents.on('new-window', onNewWindow);
     window.webContents.on('will-navigate', onWillNavigate);
-    window.loadURL(url); // eslint-disable-line @typescript-eslint/no-floating-promises
+    window.loadURL(url, options.loader); // eslint-disable-line @typescript-eslint/no-floating-promises
     return window;
   };
 
@@ -393,7 +393,7 @@ export function createMainWindow(
   }
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
-  mainWindow.loadURL(options.targetUrl);
+  mainWindow.loadURL(options.targetUrl, options.loader);
 
   // @ts-ignore
   mainWindow.on('new-tab', () => createNewTab(options.targetUrl, true));

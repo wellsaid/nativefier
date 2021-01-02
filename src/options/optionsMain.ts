@@ -45,6 +45,9 @@ export async function getOptions(rawOptions: any): Promise<AppOptions> {
         InternalName: rawOptions.name,
         FileDescription: rawOptions.name,
       },
+      loader: {
+        extraHeaders: rawOptions.httpHeader
+      }
     },
     nativefier: {
       alwaysOnTop: rawOptions.alwaysOnTop || false,

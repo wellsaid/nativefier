@@ -64,6 +64,7 @@ function pickElectronAppArgs(options: AppOptions): any {
     versionString: options.nativefier.versionString,
     width: options.nativefier.width,
     win32metadata: options.packager.win32metadata,
+    loader: options.packager.loader,
     disableOldBuildWarning: options.nativefier.disableOldBuildWarning,
     x: options.nativefier.x,
     y: options.nativefier.y,
